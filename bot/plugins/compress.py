@@ -250,11 +250,11 @@ async def encode_it(input_file, output, message, obj, total_time):
                     ),
                 )
                 stats = (
-                    f"🗜 **Encoding Video:**"
+                    f"🗜 **Ꭼnᴄᴏding Ꮩidᴇᴏ:**"
                     f" {perc_str}\n"
                     f"[{prog_bar_str}]\n"
-                    f"**Done:** {ottt}\n\n"
-                    f"❖ **ETA:** {ETA}"
+                    f"**Ꭰᴏnᴇ:** {ottt}\n\n"
+                    f"❖ **ᎬᎢᎪ :** {ETA}"
                 )
                 try:
                     await message.edit(
@@ -263,10 +263,10 @@ async def encode_it(input_file, output, message, obj, total_time):
                             [
                                 [
                                     InlineKeyboardButton(
-                                        "Cancel ❌", callback_data=f"cancel"
+                                        "⭕ Cancel", callback_data=f"cancel"
                                     ),
                                     InlineKeyboardButton(
-                                        "FILE STATUS 📊", callback_data=f"stats"
+                                        "📂 File Status", callback_data=f"stats"
                                     ),
                                 ]
                             ]
@@ -288,9 +288,9 @@ async def encode_it(input_file, output, message, obj, total_time):
     LOGS.info(stderr)
 
 
-def removeUsernames(string):
+def removeElements(string):
     st = re.sub(
-        r"\.?@(\w+)\s*|\([^)]*\)|[.:?]|Ver | Tv| DUAL| EL RINCON DE ERIC", "", string
+        r"\.?@(\w+)\s*|\([^)]*\)|[.:?]|VER | TV| DUAL", "", string
     )
     st = re.sub(r"\s{2,}|-", " ", st.strip())
     st = st.replace(" ", "_")
@@ -316,7 +316,7 @@ async def parser(name):
             ep = ""
     if "anime_title" in dic.keys():
         anime = dic["anime_title"].upper()
-        anime = removeUsernames(str(anime))
+        anime = removeElements(str(anime))
         string = string + f"#{anime}"
     if "anime_season" in dic.keys():
         season = dic["anime_season"]
