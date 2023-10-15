@@ -1,0 +1,38 @@
+name: Formatting Python Code
+on: push
+
+jobs:
+  GooglePythonStyleGuide:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+    
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+    
+      - name: Install Python lint libraries
+        run: |
+          pip install yapf autoflake isort
+    
+      - name: Check for showstoppers
+        run: yapf --style=google --in-place --recursive .
+    
+      - name: Remove unused imports and variables
+        run: autoflake --in-place --recursive --remove-all-unused-imports --remove-unused-variables --ignore-init-module-imports .
+    
+      - name: Lint with isort
+        run: |
+          isort .
+    
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: 'yapf: style-google'
+          commit_options: '--no-verify'
+          repository: .
+          commit_user_name: SamXD7
+          commit_user_email: 117455545+SamXD7@users.noreply.github.com
+          commit_author: SamXD7 <117455545+SamXD7@users.noreply.github.com>
+          
