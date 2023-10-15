@@ -1,4 +1,3 @@
-import asyncio
 import re
 import sys
 import time
@@ -41,8 +40,7 @@ async def start_command(bot, message):
 
 @bot.on_message(filters.incoming & (filters.video | filters.document))
 async def media_command(bot, message):
-    if message.chat.id not in (Config.AUTH_USERS + Config.ADMIN +
-                               Config.OWNER):
+    if message.chat.id not in (Config.AUTH_USERS + Config.ADMIN + Config.OWNER):
         return
     query = await message.reply_text("⏳ **Added To QUEUE.**", quote=True)
     queue.insert_one({"message": str(message)})
@@ -54,8 +52,7 @@ async def media_command(bot, message):
 
 @bot.on_message(filters.incoming & filters.command(["set"]))
 async def set_command(bot, message):
-    if message.chat.id not in (Config.AUTH_USERS + Config.ADMIN +
-                               Config.OWNER):
+    if message.chat.id not in (Config.AUTH_USERS + Config.ADMIN + Config.OWNER):
         return await message.reply_text(
             "🚫 **You Are Not Authorized To Use This Bot. Source-Code [(Original)](gitlab.com/nirusaki/video-encoder)**",
             disable_web_page_preview=True,
@@ -66,8 +63,7 @@ async def set_command(bot, message):
 
 @bot.on_message(filters.incoming & filters.command(["uptype"]))
 async def uptype_command(bot, message):
-    if message.chat.id not in (Config.AUTH_USERS + Config.ADMIN +
-                               Config.OWNER):
+    if message.chat.id not in (Config.AUTH_USERS + Config.ADMIN + Config.OWNER):
         return await message.reply_text(
             "🚫 **You Are Not Authorized To Use This Bot. Source-Code [(Original)](gitlab.com/nirusaki/video-encoder)**",
             disable_web_page_preview=True,
@@ -78,8 +74,7 @@ async def uptype_command(bot, message):
 
 @bot.on_message(filters.incoming & filters.command(["ffmpeg"]))
 async def ffmpeg_command(bot, message):
-    if message.chat.id not in (Config.AUTH_USERS + Config.ADMIN +
-                               Config.OWNER):
+    if message.chat.id not in (Config.AUTH_USERS + Config.ADMIN + Config.OWNER):
         return await message.reply_text(
             "🚫 **You Are Not Authorized To Use This Bot. Source-Code [(Original)](gitlab.com/nirusaki/video-encoder)**",
             disable_web_page_preview=True,
@@ -90,8 +85,7 @@ async def ffmpeg_command(bot, message):
 
 @bot.on_message(filters.incoming & filters.command(["mode"]))
 async def mode_command(bot, message):
-    if message.chat.id not in (Config.AUTH_USERS + Config.ADMIN +
-                               Config.OWNER):
+    if message.chat.id not in (Config.AUTH_USERS + Config.ADMIN + Config.OWNER):
         return await message.reply_text(
             "🚫 **You Are Not Authorized To Use This Bot. Source-Code [(Original)](gitlab.com/nirusaki/video-encoder)**",
             disable_web_page_preview=True,
@@ -102,8 +96,7 @@ async def mode_command(bot, message):
 
 @bot.on_message(filters.incoming & filters.command(["simp"]))
 async def simp_command(bot, message):
-    if message.chat.id not in (Config.AUTH_USERS + Config.ADMIN +
-                               Config.OWNER):
+    if message.chat.id not in (Config.AUTH_USERS + Config.ADMIN + Config.OWNER):
         return await message.reply_text(
             "🚫 **You Are Not Authorized To Use This Bot. Source-Code [(Original)](gitlab.com/nirusaki/video-encoder)**",
             disable_web_page_preview=True,
@@ -114,8 +107,7 @@ async def simp_command(bot, message):
 
 @bot.on_message(filters.incoming & filters.command(["vshot"]))
 async def vshot_command(bot, message):
-    if message.chat.id not in (Config.AUTH_USERS + Config.ADMIN +
-                               Config.OWNER):
+    if message.chat.id not in (Config.AUTH_USERS + Config.ADMIN + Config.OWNER):
         return await message.reply_text(
             "🚫 **You Are Not Authorized To Use This Bot. Source-Code [(Original)](gitlab.com/nirusaki/video-encoder)**",
             disable_web_page_preview=True,
@@ -126,8 +118,7 @@ async def vshot_command(bot, message):
 
 @bot.on_message(filters.incoming & filters.command(["info"]))
 async def info_command(bot, message):
-    if message.chat.id not in (Config.AUTH_USERS + Config.ADMIN +
-                               Config.OWNER):
+    if message.chat.id not in (Config.AUTH_USERS + Config.ADMIN + Config.OWNER):
         return await message.reply_text(
             "🚫 **You Are Not Authorized To Use This Bot. Source-Code [(Original)](gitlab.com/nirusaki/video-encoder)**",
             disable_web_page_preview=True,
@@ -138,8 +129,7 @@ async def info_command(bot, message):
 
 @bot.on_message(filters.incoming & filters.command(["download"]))
 async def download_command(bot, message):
-    if message.chat.id not in (Config.AUTH_USERS + Config.ADMIN +
-                               Config.OWNER):
+    if message.chat.id not in (Config.AUTH_USERS + Config.ADMIN + Config.OWNER):
         return await message.reply_text(
             "🚫 **You Are Not Authorized To Use This Bot. Source-Code [(Original)](gitlab.com/nirusaki/video-encoder)**",
             disable_web_page_preview=True,
@@ -150,8 +140,7 @@ async def download_command(bot, message):
 
 @bot.on_message(filters.incoming & filters.command(["upload"]))
 async def upload_command(bot, message):
-    if message.chat.id not in (Config.AUTH_USERS + Config.ADMIN +
-                               Config.OWNER):
+    if message.chat.id not in (Config.AUTH_USERS + Config.ADMIN + Config.OWNER):
         return await message.reply_text(
             "🚫 **You Are Not Authorized To Use This Bot. Source-Code [(Original)](gitlab.com/nirusaki/video-encoder)**",
             disable_web_page_preview=True,
@@ -162,8 +151,7 @@ async def upload_command(bot, message):
 
 @bot.on_message(filters.incoming & filters.command(["status"]))
 async def status_command(bot, message):
-    if message.chat.id not in (Config.AUTH_USERS + Config.ADMIN +
-                               Config.OWNER):
+    if message.chat.id not in (Config.AUTH_USERS + Config.ADMIN + Config.OWNER):
         return await message.reply_text(
             "🚫 **You Are Not Authorized To Use This Bot. Source-Code [(Original)](gitlab.com/nirusaki/video-encoder)**",
             disable_web_page_preview=True,

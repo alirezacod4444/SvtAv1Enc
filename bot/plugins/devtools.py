@@ -15,10 +15,8 @@ MAX_MESSAGE_LENGTH = 4096
 
 
 async def aexec(code, client, message):
-    exec(
-        f"async def __aexec(client, message): "
-        + "".join(f"\n {l}" for l in code.split("\n"))
-    )
+    exec(f"async def __aexec(client, message): " +
+         "".join(f"\n {l}" for l in code.split("\n")))
     return await locals()["__aexec"](client, message)
 
 
@@ -53,10 +51,8 @@ async def eval_message_f(client, message):
             else:
                 evaluation = "Success"
         final_output = (
-            "<b>EVAL:</b> <code>{}</code>\n\n<b>OUTPUT:</b>\n<code>{}</code>".format(
-                cmd, evaluation.strip()
-            )
-        )
+            "<b>EVAL:</b> <code>{}</code>\n\n<b>OUTPUT:</b>\n<code>{}</code>".
+            format(cmd, evaluation.strip()))
         if len(final_output) > MAX_MESSAGE_LENGTH:
             with open("eval.text", "w+", encoding="utf8") as out_file:
                 out_file.write(str(final_output))
@@ -83,12 +79,10 @@ async def exec_message_f(client, message):
             reply_to_id = message.reply_to_message.id
         time.time() + PROCESS_RUN_TIME
         process = await asyncio.create_subprocess_shell(
-            cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
-        )
+            cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE)
         try:
-            stdout, stderr = await asyncio.wait_for(
-                process.communicate(), timeout=PROCESS_RUN_TIME
-            )
+            stdout, stderr = await asyncio.wait_for(process.communicate(),
+                                                    timeout=PROCESS_RUN_TIME)
         except asyncio.TimeoutError:
             process.kill()
             return await message.reply_text(
@@ -138,15 +132,14 @@ async def progress_for_pyrogram(current, total, bot, ud_type, message, start):
         elapsed_time = TimeFormatter(milliseconds=elapsed_time)
         estimated_total_time = TimeFormatter(milliseconds=estimated_total_time)
         pro_bar = "{0}{1}".format(
-            "".join(
-                [FINISHED_PROGRESS_STR for i in range(math.floor(percentage / 10))]
-            ),
-            "".join(
-                [
-                    UN_FINISHED_PROGRESS_STR
-                    for i in range(10 - math.floor(percentage / 10))
-                ]
-            ),
+            "".join([
+                FINISHED_PROGRESS_STR for i in range(math.floor(percentage /
+                                                                10))
+            ]),
+            "".join([
+                UN_FINISHED_PROGRESS_STR
+                for i in range(10 - math.floor(percentage / 10))
+            ]),
         )
         perc_b = "{0}".format(int(percentage))
         done_mb = "{0}".format(humanbytes(current))
@@ -179,16 +172,15 @@ def TimeFormatter(milliseconds: int) -> str:
     minutes, seconds = divmod(seconds, 60)
     hours, minutes = divmod(minutes, 60)
     days, hours = divmod(hours, 24)
-    tmp = (
-        ((str(days) + "d, ") if days else "")
-        + ((str(hours) + "h, ") if hours else "")
-        + ((str(minutes) + "m, ") if minutes else "")
-        + ((str(seconds) + "s, ") if seconds else "")
-    )
+    tmp = (((str(days) + "d, ") if days else "") +
+           ((str(hours) + "h, ") if hours else "") +
+           ((str(minutes) + "m, ") if minutes else "") +
+           ((str(seconds) + "s, ") if seconds else ""))
     return tmp[:-2]
 
 
-async def progress_for_pyrogram1(current, total, bot, ud_type, message, start, size):
+async def progress_for_pyrogram1(current, total, bot, ud_type, message, start,
+                                 size):
     now = time.time()
     total = size
     diff = now - start
@@ -201,15 +193,14 @@ async def progress_for_pyrogram1(current, total, bot, ud_type, message, start, s
         elapsed_time = TimeFormatter(milliseconds=elapsed_time)
         estimated_total_time = TimeFormatter(milliseconds=estimated_total_time)
         pro_bar = "{0}{1}".format(
-            "".join(
-                [FINISHED_PROGRESS_STR for i in range(math.floor(percentage / 10))]
-            ),
-            "".join(
-                [
-                    UN_FINISHED_PROGRESS_STR
-                    for i in range(10 - math.floor(percentage / 10))
-                ]
-            ),
+            "".join([
+                FINISHED_PROGRESS_STR for i in range(math.floor(percentage /
+                                                                10))
+            ]),
+            "".join([
+                UN_FINISHED_PROGRESS_STR
+                for i in range(10 - math.floor(percentage / 10))
+            ]),
         )
         perc_b = "{0}".format(int(percentage))
         done_mb = "{0}".format(humanbytes(current))

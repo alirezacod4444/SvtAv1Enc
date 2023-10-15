@@ -209,7 +209,8 @@ async def upload_dir(client, message):
                 caption=cmd1,
                 reply_to_message_id=replyid,
                 progress=progress_for_pyrogram,
-                progress_args=(client, "📤 **Uploading File:**", xhamster, u_start),
+                progress_args=(client, "📤 **Uploading File:**", xhamster,
+                               u_start),
             )
             await xhamster.delete()
         else:
@@ -231,7 +232,8 @@ async def upload_dir(client, message):
                 caption=cmd1,
                 reply_to_message_id=replyid,
                 progress=progress_for_pyrogram,
-                progress_args=(client, "📤 **Uploading File:**", xhamster, u_start),
+                progress_args=(client, "📤 **Uploading File:**", xhamster,
+                               u_start),
             )
             await xhamster.delete()
         else:
@@ -242,7 +244,8 @@ async def upload_dir(client, message):
             )
     else:
         await bot.send_message(
-            text=f"🛑 **Access Denied.** You're Not Authorized To Access This Directory.",
+            text=
+            f"🛑 **Access Denied.** You're Not Authorized To Access This Directory.",
             chat_id=message.from_user.id,
             reply_to_message_id=message.id,
         )
@@ -252,7 +255,8 @@ async def vshots(bot, message):
     if message.reply_to_message:
         cmd1 = int(message.text.split(" ", maxsplit=1)[1])
         if cmd1 > 10:
-            await message.reply_text("⚠️ **Please provide a number between 1 and 10.**")
+            await message.reply_text(
+                "⚠️ **Please provide a number between 1 and 10.**")
         else:
             d_start = time.time()
             reply = await bot.send_message(
@@ -282,15 +286,16 @@ async def vshots(bot, message):
             await reply.delete()
             os.remove(video)
     else:
-        await message.reply_text("⚠️ **Reply To A File To Download It.**", quote=True)
+        await message.reply_text("⚠️ **Reply To A File To Download It.**",
+                                 quote=True)
 
 
 async def upload_handle(bot, message, filepath, filename, caption, reply):
     try:
         if os.path.exists(filepath) == False:
             return bot.send_message(
-                chat_id=from_user_id, text="❌ **File Not Found Unable To Upload.**"
-            )
+                chat_id=from_user_id,
+                text="❌ **File Not Found Unable To Upload.**")
         filename = filename.replace("#", "")
         mode = await uploadtype(message)
         if mode != "video":
@@ -337,14 +342,13 @@ async def upload_handle(bot, message, filepath, filename, caption, reply):
         LOGS.info(e)
 
 
-async def upload_handle1(
-    bot, from_user_id, filepath, filename, caption, reply, reply_to_message
-):
+async def upload_handle1(bot, from_user_id, filepath, filename, caption, reply,
+                         reply_to_message):
     try:
         if os.path.exists(filepath) == False:
             return bot.send_message(
-                chat_id=from_user_id, text="❌ **File Not Found Unable To Upload.**"
-            )
+                chat_id=from_user_id,
+                text="❌ **File Not Found Unable To Upload.**")
         filename = filename.replace("#", "")
         if not re.search(r"_S\d+", filename):
             caption = caption.replace("#", "").replace("_", " ")

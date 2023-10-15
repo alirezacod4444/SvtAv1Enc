@@ -27,9 +27,7 @@ class Config(object):
     USERNAME = str(os.environ.get("BOT_USERNAME"))
     LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL"))
     AUTH_USERS = list(
-        set(
-            int(x)
-            for x in os.environ.get("AUTH_USERS", "1676326120").split()))
+        set(int(x) for x in os.environ.get("AUTH_USERS", "1676326120").split()))
     ADMIN = list(
         set(int(x) for x in os.environ.get("ADMIN", "5629750139").split()))
     OWNER = list(set(int(x) for x in os.environ.get("OWNER").split()))
@@ -57,8 +55,7 @@ logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     datefmt="%d-%b-%y %H:%M:%S",
     handlers=[
-        RotatingFileHandler(LOG_FILE_NAME, maxBytes=2097152000,
-                            backupCount=10),
+        RotatingFileHandler(LOG_FILE_NAME, maxBytes=2097152000, backupCount=10),
         logging.StreamHandler(),
     ],
 )

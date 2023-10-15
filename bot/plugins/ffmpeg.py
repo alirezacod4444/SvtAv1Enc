@@ -13,6 +13,7 @@ from bot import LOGS, bot
 
 
 class ffmpeg(object):
+
     async def resolution(filepath):
         metadata = extractMetadata(createParser(filepath))
         if metadata.has("width") and metadata.has("height"):
@@ -30,8 +31,7 @@ class ffmpeg(object):
             stdout, stderr = process.communicate()
             output = stdout.decode().strip()
             duration = re.search(
-                "Duration:\\s*(\\d*):(\\d*):(\\d+\\.?\\d*)[\\s\\w*$]", output
-            )
+                "Duration:\\s*(\\d*):(\\d*):(\\d+\\.?\\d*)[\\s\\w*$]", output)
             bitrates = re.search("bitrate:\\s*(\\d+)[\\s\\w*$]", output)
             if duration is not None:
                 hours = int(duration.group(1))
@@ -47,6 +47,7 @@ class ffmpeg(object):
 
 
 class functions(object):
+
     async def sample(filepath, output):
         try:
             time.time()

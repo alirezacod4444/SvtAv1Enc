@@ -31,8 +31,7 @@ async def ffprobe(i_filepath):
     ofp = directory + ".json"
     code = f'ffprobe -v quiet -print_format json -show_format -show_streams "{i_filepath}" > "{directory}.json"'
     process = await asyncio.create_subprocess_shell(
-        code, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
-    )
+        code, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE)
     stdout, stderr = await process.communicate()
     if os.path.exists(ofp):
         with open(ofp, "r") as file:
@@ -57,19 +56,16 @@ def TimeFormatter(milliseconds: int) -> str:
     minutes, seconds = divmod(seconds, 60)
     hours, minutes = divmod(minutes, 60)
     days, hours = divmod(hours, 24)
-    tmp = (
-        ((str(days) + "d, ") if days else "")
-        + ((str(hours) + "h, ") if hours else "")
-        + ((str(minutes) + "m, ") if minutes else "")
-        + ((str(seconds) + "s, ") if seconds else "")
-    )
+    tmp = (((str(days) + "d, ") if days else "") +
+           ((str(hours) + "h, ") if hours else "") +
+           ((str(minutes) + "m, ") if minutes else "") +
+           ((str(seconds) + "s, ") if seconds else ""))
     return tmp[:-2]
 
 
 async def renew(e):
     await e.reply_text(
-        "✅ **Cleared Queued, Working Files and Cached Downloads!**", quote=True
-    )
+        "✅ **Cleared Queued, Working Files and Cached Downloads!**", quote=True)
     list_handler.clear()
     data.clear()
     queue.delete_many({})
@@ -84,7 +80,8 @@ async def renew(e):
 
 
 async def sysinfo(e):
-    message = await e.reply_text("🚀 **Getting System Information...**", quote=True)
+    message = await e.reply_text("🚀 **Getting System Information...**",
+                                 quote=True)
     start_time = time.monotonic()
     last_content = None
     os_info = f"🛠️ **Operating System: {platform.system()} {platform.release()} ({platform.machine()})**\n\n"
@@ -124,7 +121,8 @@ async def sysinfo(e):
         disk_perc = int(disk.percent)
         disk_used = psutil._common.bytes2human(disk.used)
         disk_total = psutil._common.bytes2human(disk.total)
-        disk_bar = "▪️" * int(disk_perc / 10) + "▫️" * (10 - int(disk_perc / 10))
+        disk_bar = "▪️" * int(
+            disk_perc / 10) + "▫️" * (10 - int(disk_perc / 10))
         disk_info = f"💾 **Disk Usage:** {disk_perc}%\n[{disk_bar}]\n**Used:** {disk_used} **of** {disk_total}\n**Free :** {psutil._common.bytes2human(disk.free)}\n"
         sys_info = f"{os_info}{freq_info}"
         for i, percent in enumerate(cpu_usage[:cpu_count]):
@@ -195,8 +193,7 @@ async def encode_it(input_file, output, message, obj, total_time):
     extra = await getffmpeg1(obj)
     code = f'ffmpeg -progress progress.txt -loglevel error -i "{input_file}" {extra} -y "{output}"'
     process = await asyncio.create_subprocess_shell(
-        code, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
-    )
+        code, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE)
     COMPRESSION_START_TIME = time.time()
     while process.returncode != 0:
         try:
@@ -223,54 +220,42 @@ async def encode_it(input_file, output, message, obj, total_time):
                     if progress[-1] == "end":
                         break
                 execution_time = TimeFormatter(
-                    (time.time() - COMPRESSION_START_TIME) * 1000
-                )
+                    (time.time() - COMPRESSION_START_TIME) * 1000)
                 dpcd = os.listdir("encodes/")
                 fis = f"encodes/{dpcd[0]}"
                 ottt = hbs(int(Path(fis).stat().st_size))
                 elapsed_time = int(time_in_us) / 1000000
-                difference = math.floor((total_time - elapsed_time) / float(speed))
+                difference = math.floor(
+                    (total_time - elapsed_time) / float(speed))
                 ETA = "-"
                 if difference > 0:
                     ETA = TimeFormatter(difference * 1000)
                 percentage = math.floor(elapsed_time * 100 / total_time)
                 perc_str = "{0}%".format(round(percentage, 2))
                 prog_bar_str = "{0}{1}".format(
-                    "".join(
-                        [
-                            FINISHED_PROGRESS_STR
-                            for i in range(math.floor(percentage / 10))
-                        ]
-                    ),
-                    "".join(
-                        [
-                            UN_FINISHED_PROGRESS_STR
-                            for i in range(10 - math.floor(percentage / 10))
-                        ]
-                    ),
+                    "".join([
+                        FINISHED_PROGRESS_STR
+                        for i in range(math.floor(percentage / 10))
+                    ]),
+                    "".join([
+                        UN_FINISHED_PROGRESS_STR
+                        for i in range(10 - math.floor(percentage / 10))
+                    ]),
                 )
-                stats = (
-                    f"🗜 **Ꭼnᴄᴏding Ꮩidᴇᴏ:**"
-                    f" {perc_str}\n"
-                    f"[{prog_bar_str}]\n"
-                    f"**Ꭰᴏnᴇ:** {ottt}\n\n"
-                    f"❖ **ᎬᎢᎪ :** {ETA}"
-                )
+                stats = (f"🗜 **Ꭼnᴄᴏding Ꮩidᴇᴏ:**"
+                         f" {perc_str}\n"
+                         f"[{prog_bar_str}]\n"
+                         f"**Ꭰᴏnᴇ:** {ottt}\n\n"
+                         f"❖ **ᎬᎢᎪ :** {ETA}")
                 try:
                     await message.edit(
                         text=stats,
-                        reply_markup=InlineKeyboardMarkup(
-                            [
-                                [
-                                    InlineKeyboardButton(
-                                        "⭕ Cancel", callback_data=f"cancel"
-                                    ),
-                                    InlineKeyboardButton(
-                                        "📂 File Status", callback_data=f"stats"
-                                    ),
-                                ]
-                            ]
-                        ),
+                        reply_markup=InlineKeyboardMarkup([[
+                            InlineKeyboardButton("⭕ Cancel",
+                                                 callback_data=f"cancel"),
+                            InlineKeyboardButton("📂 File Status",
+                                                 callback_data=f"stats"),
+                        ]]),
                     )
                 except Exception:
                     cast = None
@@ -289,9 +274,7 @@ async def encode_it(input_file, output, message, obj, total_time):
 
 
 def removeElements(string):
-    st = re.sub(
-        r"\.?@(\w+)\s*|\([^)]*\)|[.:?]|VER | TV| DUAL", "", string
-    )
+    st = re.sub(r"\.?@(\w+)\s*|\([^)]*\)|[.:?]|VER | TV| DUAL", "", string)
     st = re.sub(r"\s{2,}|-", " ", st.strip())
     st = st.replace(" ", "_")
     return st
@@ -383,9 +366,9 @@ async def encode(dic):
         from_user_id = int(dic["from_user"]["id"])
         reply_video_id = int(dic["id"])
         dfix = "📥 **Downloading Video:**"
-        reply = await bot.send_message(
-            text=dfix, chat_id=from_user_id, reply_to_message_id=reply_video_id
-        )
+        reply = await bot.send_message(text=dfix,
+                                       chat_id=from_user_id,
+                                       reply_to_message_id=reply_video_id)
         media_type = str(dic["media"])
         if media_type == "MessageMediaType.VIDEO":
             file_id = str(dic["video"]["file_id"])
@@ -411,9 +394,8 @@ async def encode(dic):
         output_name = "encodes/" + joined + ".mkv"
         await encode_it(down, output_name, reply, from_user_id, duration)
         await reply.edit("📤 **Uploading Video:**")
-        await upload_handle1(
-            bot, from_user_id, output_name, with_ext, joined, reply, reply_video_id
-        )
+        await upload_handle1(bot, from_user_id, output_name, with_ext, joined,
+                             reply, reply_video_id)
         await reply.delete(True)
         os.remove(down)
         os.remove(output_name)
