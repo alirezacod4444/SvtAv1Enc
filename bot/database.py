@@ -2,7 +2,7 @@ import json
 
 from bot import LOGS, collection, data, list_handler, queue
 
-ffmpeg = "-c:v libsvtav1 -pix_fmt yuv420p10le -svtav1-params tune=0 -g 240 -map 0:v:0 -c:a libopus -ac 2 -map 0:a -map 0:s?"
+ffmpeg = "-c:v libsvtav1 -pix_fmt yuv420p10le -svtav1-params 'tune=0' -vf 'scale=1280:-2' -g 240 -preset 8 -map 0:v:0 -c:a libopus -b:a 48k -ac 2 -map 0:a -map 0:s?"
 
 
 async def adduser(message):
