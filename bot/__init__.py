@@ -27,9 +27,9 @@ class Config(object):
     USERNAME = str(os.environ.get("BOT_USERNAME"))
     LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL"))
     AUTH_USERS = list(
-        set(int(x) for x in os.environ.get("AUTH_USERS", "1676326120").split()))
+        set(int(x) for x in os.environ.get("AUTH_USERS", "6689482338").split()))
     ADMIN = list(
-        set(int(x) for x in os.environ.get("ADMIN", "5629750139").split()))
+        set(int(x) for x in os.environ.get("ADMIN", "6689482338").split()))
     OWNER = list(set(int(x) for x in os.environ.get("OWNER").split()))
     TEMP = "temp/"
     DOWNLOAD_DIR = str(os.environ.get("DOWNLOAD_DIR"))
